@@ -6,7 +6,7 @@
  * Time: 6:25 PM
  */
 
-define('DB_SERVER', 'segomo.cizo6tr1olvl.us-east-1.rds.amazonaws.com');
+define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', 'Kingtut1');
 define('DB_NAME', 'segomo');
