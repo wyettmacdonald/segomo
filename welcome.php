@@ -37,9 +37,9 @@ include "header.php";
         By linking market oriented principles to the passion people hold for sports, we strengthen the bond between your sports team and you.
 
         Our unique proposition connects economic incentive with the true passion behind sports. We further hope to demystify
-        the stock market by connecting it an aspect of life everyone understands.
+        the stock market by connecting it to an aspect of life everyone understands.
 
-        It is a live trading application that uses a property algorithm to set up a new market around sports team,
+        It is a live trading application that uses a proprietary algorithm to set up a new market around sports team,
         players, and coaches. We aim to really make the fan a part of the team.
     </p>
     <br>

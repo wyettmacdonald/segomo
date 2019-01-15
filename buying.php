@@ -16,10 +16,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
-$play_name = $_GET["nid"];
-$price_query = mysqli_query($link, "SELECT price FROM players WHERE name = '$play_name'");
-$row2 = mysqli_fetch_assoc($price_query);
-$the_price = $row2["price"];
+$play_name = $_GET['nid'];
+$price_query = $link->query("SELECT price FROM players WHERE name = '$play_name'");
+$row2 = $price_query->fetch(PDO::FETCH_ASSOC);
+$the_price = $row2['price'];
 
 //$name = $_GET["nid"];
 require_once "config.php";
@@ -34,23 +34,23 @@ function addData() {
     $myname = $_SESSION['username'];
 
     /* Attempt to connect to MySQL database */
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $buyer = mysqli_query($link, "SELECT id FROM users WHERE username = '$myname'");
-    $row = mysqli_fetch_assoc($buyer);
+    $link = new PDO("pgsql:dbname='d9gpjimto8jmv4';host='ec2-54-225-121-235.compute-1.amazonaws.com'", DB_USERNAME, DB_PASSWORD);
+    $buyer = $link->query("SELECT id FROM users WHERE username = '$myname'");
+    $row = $buyer->fetch(PDO::FETCH_ASSOC);
 //    echo $row;
-    $buyer_name = $row["id"];
+    $buyer_name = $row['id'];
 
-    $coins_q = mysqli_query($link, "SELECT coins FROM users WHERE id=$buyer_name");
-    $coins_fetch = mysqli_fetch_assoc($coins_q);
-    $coins = $coins_fetch["coins"];
+    $coins_q = $link->query("SELECT coins FROM users WHERE id=$buyer_name");
+    $coins_fetch = $coins_q->fetch(PDO::FETCH_ASSOC);
+    $coins = $coins_fetch['coins'];
 
-    $shares_q = mysqli_query($link, "SELECT shares_bought FROM players WHERE name='$name'");
-    $shares_fetch = mysqli_fetch_assoc($shares_q);
-    $prev_shares = $shares_fetch["shares_bought"];
+    $shares_q = $link->query("SELECT shares_bought FROM players WHERE name='$name'");
+    $shares_fetch = $shares_q->fetch(PDO::FETCH_ASSOC);
+    $prev_shares = $shares_fetch['shares_bought'];
 
-    $price_query = mysqli_query($link, "SELECT price FROM players WHERE name = '$name'");
-    $row2 = mysqli_fetch_assoc($price_query);
-    $price = $row2["price"];
+    $price_query = $link->query("SELECT price FROM players WHERE name = '$name'");
+    $row2 = $price_query->fetch(PDO::FETCH_ASSOC);
+    $price = $row2['price'];
 
     if($shares*$price > $coins) {
         echo '<script type="text/javascript"> alert("You need more funds!") </script>';
@@ -61,45 +61,46 @@ function addData() {
         $new_coins = $coins - ($shares*$price);
         $new_shares = ($shares+$prev_shares);
 
-        $num_shares_query_before = mysqli_query($link, "SELECT shares_bought FROM players WHERE name='$name'");
-        $share_price_bought_before = mysqli_fetch_assoc($num_shares_query_before);
-        $num_shares_bought_before = $share_price_bought_before["shares_bought"];
+        $num_shares_query_before = $link->query("SELECT shares_bought FROM players WHERE name='$name'");
+        $share_price_bought_before = $num_shares_query_before->fetch(PDO::FETCH_ASSOC);
+        $num_shares_bought_before = $share_price_bought_before['shares_bought'];
 
-        $coin_query = mysqli_query($link, "UPDATE users SET coins=$new_coins WHERE id=$buyer_name");
-        $share_query = mysqli_query($link, "UPDATE players SET shares_bought='$new_shares' WHERE name='$name'");
+        $coin_query = $link->query("UPDATE users SET coins=$new_coins WHERE id=$buyer_name");
+        $share_query = $link->query("UPDATE players SET shares_bought='$new_shares' WHERE name='$name'");
 
-        $num_shares_query = mysqli_query($link, "SELECT shares_bought FROM players WHERE name='$name'");
-        $share_price_bought = mysqli_fetch_assoc($num_shares_query);
-        $num_shares_bought = $share_price_bought["shares_bought"];
+        $num_shares_query = $link->query("SELECT shares_bought FROM players WHERE name='$name'");
+        $share_price_bought = $num_shares_query->fetch(PDO::FETCH_ASSOC);
+        $num_shares_bought = $share_price_bought['shares_bought'];
 
-        $num_shares_sold_query = mysqli_query($link, "SELECT shares_sold FROM players WHERE name='$name'");
-        $share_price_sold = mysqli_fetch_assoc($num_shares_sold_query);
-        $num_shares_sold = $share_price_sold["shares_sold"];
+        $num_shares_sold_query = $link->query("SELECT shares_sold FROM players WHERE name='$name'");
+        $share_price_sold = $num_shares_sold_query->fetch(PDO::FETCH_ASSOC);
+        $num_shares_sold = $share_price_sold['shares_sold'];
 
-        if((($num_shares_bought_before - $num_shares_sold) < 10) && (($num_shares_bought - $num_shares_sold) >= 10) or (($num_shares_bought_before - $num_shares_sold) < 10) && (($num_shares_bought - $num_shares_sold) >= 10)) {
-            $new_price = $price*1.1;
-            $num_shares_q = mysqli_query($link, "UPDATE players SET price='$new_price' WHERE name='$name'");
+        if((($num_shares_bought_before - $num_shares_sold) < 20) && (($num_shares_bought - $num_shares_sold) >= 20) or (($num_shares_bought_before - $num_shares_sold) < 40) && (($num_shares_bought - $num_shares_sold) >= 40)) {
+            $new_price = $price*1.05;
+            $num_shares_q = $link->query("UPDATE players SET price='$new_price' WHERE name='$name'");
 
         }
 //        mysqli_fetch_assoc($coin_query);
         $sql = "INSERT INTO purchases (name, price, shares, total, buyer_id) VALUES (?,$price,$shares,$price*$shares,$buyer_name)";
 
-        if ($stmt = mysqli_prepare($link, $sql)) {
+//        if ($stmt = mysqli_prepare($link, $sql)) {
+        if($stmt = $link->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_name);
+//            mysqli_stmt_bind_param($stmt, "s", $param_name);
 
             // Set parameters
-            $param_name = $name;
+//            $param_name = $name;
 
-            if (mysqli_stmt_execute($stmt)) {
+            if ($stmt->execute(array($name))) {
                 // Redirect to login page
                 $message = "Successfully Bought $name";
                 header("Location: feed.php?Message=" . urlencode($message));
 
-                mysqli_stmt_close($stmt);
+//                mysqli_stmt_close($stmt);
 
             } else {
-                echo mysqli_stmt_error($stmt);
+//                echo mysqli_stmt_error($stmt);
                 echo "Something went wrong. Please try again later.";
             }
         }

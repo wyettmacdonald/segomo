@@ -55,22 +55,22 @@ include "vars.php";
     <div class="player-feed">
         <p>
         <?php
-        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+        $link = new PDO("pgsql:dbname='d9gpjimto8jmv4';host='ec2-54-225-121-235.compute-1.amazonaws.com'", DB_USERNAME, DB_PASSWORD);
 
-        $query = mysqli_query($link, "SELECT * FROM players ORDER BY price DESC");
+        $query = $link->query("SELECT * FROM players ORDER BY price DESC");
         echo "<tr>";
 
         $id_counter = 0;
-        while ($row = mysqli_fetch_array($query, MYSQLI_NUM)) { ?>
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) { ?>
             <tr>
                 <?php
-                echo $row[1] . "<br>";
-                echo $row[3] . " College" . "<br>";
-                echo "<strong>" . $row[2] . "</strong>";
+                echo $row['name'] . "<br>";
+                echo $row['school'] . " College" . "<br>";
+                echo "<strong>" . $row['price'] . "</strong>";
                 ?>
                 <td>
                     <br>
-                    <button id="<?php echo $row[0]; ?>" onclick="clic(<?php echo $row[0]; ?>)" name="buy" style="width:auto;" value="<?php echo $row[1]; ?>">Buy Shares</button>
+                    <button id="<?php echo $row['id']; ?>" onclick="clic(<?php echo $row['id']; ?>)" name="buy" style="width:auto;" value="<?php echo $row['name']; ?>">Buy Shares</button>
                     <br>
                     <!--                    --><?php $id_counter++; ?>
                 </td>
