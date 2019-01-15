@@ -95,17 +95,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         if($stmt = $link->prepare($sql)){
 
             // Bind variables to the prepared statement as parameters
-//            pg_send_query_params($stmt, "ss", $param_username, $param_password);
 
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
-
 //            mysqli_stmt_close($stmt);
             // Attempt to execute the prepared statement
 //            mysqli_stmt_error($stmt);
 //            echo $stmt;
-            if($stmt->execute(array($username, $password))){
+            if($stmt->execute(array($param_username, $param_password))){
                 // Redirect to login page
                 header("location: login.php");
 //                mysqli_stmt_close($stmt);
