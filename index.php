@@ -7,7 +7,7 @@
  */
 
 // Include config file
-//require_once "config.php";
+require_once "config.php";
 
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
@@ -26,10 +26,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 //        echo mysqli_prepare($link, $sql);
 
-        if($stmt = mysqli_prepare($link, $sql)){
+        if($stmt = $link->prepare($sql)){
 
+//            $stmt->execute(array($_POST["username"]));
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
+//            pg_send_query_params($stmt, "s", $param_username);
 
             // Set parameters
             $param_username = trim($_POST["username"]);
@@ -37,22 +38,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 //            mysqli_stmt_close($stmt);
 
             // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
+            if($stmt->execute(array($_POST["username"]))) {
 
-                echo "username here";
 
                 /* store result */
-                mysqli_stmt_store_result($stmt);
+//                mysqli_stmt_store_result($stmt);
 
 
-                if(mysqli_stmt_num_rows($stmt) == 1){
+                if($stmt->rowCount() == 1){
                     $username_err = "This username is already taken.";
-                } else{
-//                    echo "in here too";
-                    $username = trim($_POST["username"]);
-                    mysqli_stmt_close($stmt);
                 }
-            } else{
+                else{
+                    $username = trim($_POST["username"]);
+//                    mysqli_stmt_close($stmt);
+                }
+            }
+            else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
@@ -89,11 +90,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         /* Attempt to connect to MySQL database */
 //        $link = mysqli_connect($_SERVER['RDS_HOSTNAME'], $_SERVER['RDS_USERNAME'], $_SERVER['RDS_PASSWORD'], $_SERVER['RDS_DB_NAME'], $_SERVER['RDS_PORT']);
 
-        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+//        $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 
-        if($stmt = mysqli_prepare($link, $sql)){
+        if($stmt = $link->prepare($sql)){
+
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
+//            pg_send_query_params($stmt, "ss", $param_username, $param_password);
 
             // Set parameters
             $param_username = $username;
@@ -102,17 +104,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 //            mysqli_stmt_close($stmt);
             // Attempt to execute the prepared statement
 //            mysqli_stmt_error($stmt);
-            if(mysqli_stmt_execute($stmt)){
+//            echo $stmt;
+            if($stmt->execute(array($username, $password))){
                 // Redirect to login page
                 header("location: login.php");
 //                mysqli_stmt_close($stmt);
             } else{
-                echo mysqli_stmt_error($stmt);
+//                echo pg_result_error($stmt);
                 echo "Something went wrong. Please try again later.";
             }
         }
         else {
-            echo "error" . mysqli_connect_error();
+            echo "error";
         }
 
         // Close statement
@@ -120,7 +123,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Close connection
-    mysqli_close($link);
+//    pg_close($link);
 }
 ?>
 
