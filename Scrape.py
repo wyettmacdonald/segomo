@@ -85,7 +85,7 @@ record_soup = BeautifulSoup(records, 'html.parser')
 
 record_table = record_soup.find('pre')
 table = soup.find('table', attrs={'class','chssmallreg'})
-GKtable = soup.find('tr', attrs={'class', 'chswhite10'})
+# GKtable = soup.find('tr', attrs={'class', 'chswhite10'})
 table2 = soup2.find('table', attrs={'class','chssmallreg'})
 table3 = soup3.find('table', attrs={'class','chssmallreg'})
 table4 = soup4.find('table', attrs={'class','chssmallreg'})
@@ -96,10 +96,13 @@ table8 = soup8.find('table', attrs={'class','chssmallreg'})
 table9 = soup9.find('table', attrs={'class','chssmallreg'})
 table10 = soup10.find('table', attrs={'class','chssmallreg'})
 
+# record_data = []
 # for d in record_table:
-# 	print d
+# 	record_data.append(d)
+# 
+# print record_data[1][10]
 
-GKdata = GKtable.findAll('td')
+# GKdata = GKtable.findAll('td')
 data = table.findAll('td')
 data2 = table2.findAll('td')
 data3 = table3.findAll('td')
@@ -194,6 +197,7 @@ for x in range(24):
 		denom = str(allData[count1+18])
 		pen = float(denom[-1])
 	w = checkNull((allData[2][25]))
+	print w
 	l = checkNull((allData[2][27]))
 	t = checkNull((allData[2][29]))
 	names.append(allData[count1+1])

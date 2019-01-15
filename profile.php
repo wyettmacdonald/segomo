@@ -32,43 +32,43 @@ function sellShares() {
 
 
     /* Attempt to connect to MySQL database */
-    $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-    $buyer = mysqli_query($link, "SELECT id FROM users WHERE username = '$myname'");
-    $row = mysqli_fetch_assoc($buyer);
-    $buyer_id = $row["id"];
+    $link = new PDO("pgsql:dbname='d9gpjimto8jmv4';host='ec2-54-225-121-235.compute-1.amazonaws.com'", DB_USERNAME, DB_PASSWORD);
+    $buyer = $link->query("SELECT id FROM users WHERE username = '$myname'");
+    $row = $buyer->fetch(PDO::FETCH_ASSOC);
+    $buyer_id = $row['id'];
 
-    $coins_query = mysqli_query($link, "SELECT coins FROM users WHERE id=$buyer_id");
-    $coins_fetch = mysqli_fetch_assoc($coins_query);
+    $coins_query = $link->query("SELECT coins FROM users WHERE id=$buyer_id");
+    $coins_fetch = $coins_query->fetch(PDO::FETCH_ASSOC);
     $coins = $coins_fetch["coins"];
 
-    $price_query = mysqli_query($link, "SELECT price FROM players WHERE name='$player_name'");
-    $row2_fetch = mysqli_fetch_assoc($price_query);
-    $price = $row2_fetch["price"];
+    $price_query = $link->query("SELECT price FROM players WHERE name='$player_name'");
+    $row2_fetch = $price_query->fetch(PDO::FETCH_ASSOC);
+    $price = $row2_fetch['price'];
 
-    $share_sold_query = mysqli_query($link, "SELECT shares_sold FROM players WHERE name='$player_name'");
-    $row2_fetch_sold = mysqli_fetch_assoc($share_sold_query);
-    $prev_shares_sold = $row2_fetch_sold["shares_sold"];
+    $share_sold_query = $link->query("SELECT shares_sold FROM players WHERE name='$player_name'");
+    $row2_fetch_sold = $share_sold_query->fetch(PDO::FETCH_ASSOC);
+    $prev_shares_sold = $row2_fetch_sold['shares_sold'];
 
     $new_coins = $coins + ($shares*$price);
 
 
     $new_shares_sold = ($prev_shares_sold+$shares);
-    $shares_sold_q = mysqli_query($link,"UPDATE players SET shares_sold='$new_shares_sold' WHERE name='$player_name'");
+    $shares_sold_q = $link->query("UPDATE players SET shares_sold='$new_shares_sold' WHERE name='$player_name'");
 
-    $coin_query = mysqli_query($link,"UPDATE users SET coins=$new_coins WHERE id=$buyer_id");
-    $sql = mysqli_query($link, "UPDATE purchases SET buyer_id=NULL WHERE id=$p_id");
+    $coin_query = $link->query("UPDATE users SET coins=$new_coins WHERE id=$buyer_id");
+    $sql = $link->query("UPDATE purchases SET buyer_id=NULL WHERE id=$p_id");
 
-    $num_shares_query = mysqli_query($link, "SELECT shares_sold FROM players WHERE name='$name'");
-    $share_price = mysqli_fetch_assoc($num_shares_query);
-    $num_shares = $share_price["shares_sold"];
+    $num_shares_query = $link->query("SELECT shares_sold FROM players WHERE name='$name'");
+    $share_price = $num_shares_query->fetch(PDO::FETCH_ASSOC);
+    $num_shares = $share_price['shares_sold'];
 
-    $num_shares_query_sold = mysqli_query($link, "SELECT shares_bought FROM players WHERE name='$player_name'");
-    $share_price_sold = mysqli_fetch_assoc($num_shares_query_sold);
-    $num_shares_bought = $share_price_sold["shares_bought"];
+    $num_shares_query_sold = $link->query("SELECT shares_bought FROM players WHERE name='$player_name'");
+    $share_price_sold = $num_shares_query_sold->fetch(PDO::FETCH_ASSOC);
+    $num_shares_bought = $share_price_sold['shares_bought'];
 
     if((($num_shares_bought - $prev_shares_sold) >= 10) && (($num_shares_bought - $new_shares_sold) < 10) or (($num_shares_bought - $prev_shares_sold) >= 20) && (($num_shares_bought - $new_shares_sold) < 20)) {
         $new_price = $price*0.9;
-        $num_shares_q = mysqli_query($link, "UPDATE players SET price='$new_price' WHERE name='$player_name'");
+        $num_shares_q = $link->query("UPDATE players SET price='$new_price' WHERE name='$player_name'");
 
     }
 
@@ -109,37 +109,39 @@ function sellShares() {
             <?php
 
             $username = $_SESSION["username"];
-            $link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-            $buyer = mysqli_query($link, "SELECT users.id FROM users WHERE username='$username'");
-            $row = mysqli_fetch_assoc($buyer);
-            $my_id = intval($row["id"]);
+            $link = new PDO("pgsql:dbname='d9gpjimto8jmv4';host='ec2-54-225-121-235.compute-1.amazonaws.com'", DB_USERNAME, DB_PASSWORD);
+            $buyer = $link->query("SELECT users.id FROM users WHERE username='$username'");
+            $row = $buyer->fetch(PDO::FETCH_ASSOC);
+            $my_id = intval($row['id']);
 
-            $port = mysqli_query($link, "SELECT purchases.* FROM users JOIN purchases ON (users.id = purchases.buyer_id) WHERE buyer_id='$my_id'");
+            $port = $link->query("SELECT * FROM purchases WHERE buyer_id='$my_id'");
+
+            //            $port = $link->query("SELECT purchases.* FROM users JOIN purchases ON (users.id = purchases.buyer_id) WHERE buyer_id='$my_id'");
 
             //            echo mysqli_errno($link);
-            $port_array = array();
+//            $port_array = array();
             $counter = 0;
             $total = 0;
-            while($row = mysqli_fetch_assoc($port)) {
-                $port_array[$counter] = $row["name"];
+            while($row = $port->fetch(PDO::FETCH_ASSOC)) {
+                $port_array[$counter] = $row['name'];
                 $counter++;
                 echo "<tr>";
-                $the_name = $row["name"];
-                $num_shares = $row["shares"];
-                $purchase_id = $row["id"];
+                $the_name = $row['name'];
+                $num_shares = $row['shares'];
+                $purchase_id = $row['id'];
                 echo "<td>" . $the_name . "</td>";
-                echo "<td>" . floatval($row["price"]) . "</td>";
-                $current_price = mysqli_query($link, "SELECT price FROM players WHERE name='$the_name'");
-                $cp = mysqli_fetch_assoc($current_price);
-                $cur_price = $cp["price"];
-                if($cur_price > $row["price"] or $cur_price == $row["price"]) {
+                echo "<td>" . floatval($row['price']) . "</td>";
+                $current_price = $link->query("SELECT price FROM players WHERE name='$the_name'");
+                $cp = $current_price->fetch(PDO::FETCH_ASSOC);;
+                $cur_price = $cp['price'];
+                if($cur_price > $row['price'] or $cur_price == $row['price']) {
                     echo "<td><font color='green'><strong>" . $cur_price . "</strong></font></td>";
                 }
                 else {
                     echo "<td><font color='red'><strong>" . $cur_price . "</strong></font></td>";
                 }
-                echo "<td>" . $row["shares"] . "</td>";
-                echo "<td>" . ($row["shares"]*$cur_price) . "</td>";
+                echo "<td>" . $row['shares'] . "</td>";
+                echo "<td>" . ($row['shares']*$cur_price) . "</td>";
                 echo "<td>";
                 echo "<form action='profile.php' method='post'>";
                 echo "<input class='sell-button' type='submit' name='sell' value='SELL' />";
@@ -148,11 +150,11 @@ function sellShares() {
                 echo "<input type='hidden' name='pid' value= '$purchase_id'/>";
                 echo "</form>";
                 echo "</td>";
-                $total += ($row["shares"]*$cur_price);
+                $total += ($row['shares']*$cur_price);
                 echo "</tr>";
             }
 
-            $counts = array_count_values($port_array);
+//            $counts = array_count_values($port_array);
 
             ?>
         </table>
