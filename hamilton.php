@@ -53,7 +53,7 @@ include "header.php";
                     ?>
                     <td>
                         <br>
-                        <button id="<?php echo $row['id']; ?>" onclick="clic(<?php echo $row['id']; ?>)" name="buy" style="width:auto;" value="<?php echo $row['id']; ?>">Buy Shares</button>
+                        <button id="<?php echo $row['id']; ?>" onclick="clic(<?php echo $row['id']; ?>)" name="buy" style="width:auto;" value="<?php echo $row['name']; ?>">Buy Shares</button>
                         <br>
                         <!--                    --><?php $id_counter++; ?>
                     </td>
