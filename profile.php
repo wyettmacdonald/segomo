@@ -66,8 +66,8 @@ function sellShares() {
     $share_price_sold = $num_shares_query_sold->fetch(PDO::FETCH_ASSOC);
     $num_shares_bought = $share_price_sold['shares_bought'];
 
-    if((($num_shares_bought - $prev_shares_sold) >= 10) && (($num_shares_bought - $new_shares_sold) < 10) or (($num_shares_bought - $prev_shares_sold) >= 20) && (($num_shares_bought - $new_shares_sold) < 20)) {
-        $new_price = $price*0.9;
+    if((($num_shares_bought - $prev_shares_sold) >= 20) && (($num_shares_bought - $new_shares_sold) < 20) or (($num_shares_bought - $prev_shares_sold) >= 40) && (($num_shares_bought - $new_shares_sold) < 40)) {
+        $new_price = $price*0.95;
         $num_shares_q = $link->query("UPDATE players SET price='$new_price' WHERE name='$player_name'");
 
     }
