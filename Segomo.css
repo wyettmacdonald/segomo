@@ -340,15 +340,15 @@ ul, menu, dir {
 }
 
 /* Style the active/current link*/
-/*.header a.active {*/
-	/*background-color: dodgerblue;*/
-	/*color: white;*/
-/*}*/
-
-.active {
+.header a.active {
 	background-color: dodgerblue;
 	color: white;
 }
+
+/*.active {*/
+	/*background-color: dodgerblue;*/
+	/*color: white;*/
+/*}*/
 
 /* Float the link section to the right */
 #header-right {
