@@ -66,8 +66,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     // Bind result variables
 //                    $stmt = pg($stmt, $id, $username, $password, $coins);
                     $result = $stmt->fetchAll();
-                    print_r($result);
-                    echo strval($result[0][1]);
+//                    print_r($result);
+//                    echo strval($result[0][1]);
 //                    if($stmt->execute(array($result[0][0], $result[0][1], $result[0][2], $coins))) {
                         if(password_verify($password, $result[0][2])) {
                             // Password is correct, so start a new session
@@ -80,10 +80,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
                             $_SESSION["coins"] = $coins;
+                            $_SESSION["email"] = $email;
 
-                            // Redirect user to welcome page
-                            header("location: welcome.php");
+                            $email_sql = $link->query("SELECT email FROM users WHERE username = '$username'");
+                            $email_row = $email_sql->fetch(PDO::FETCH_ASSOC);
+                            if($email_row['email'] == '') {
+                                header("location: add_email.php");
+                            }
+
+                            else {
+                                // Redirect user to welcome page
+                                header("location: welcome.php");
 //                            mysqli_stmt_close($stmt);
+                            }
 
                         }
                         else{
