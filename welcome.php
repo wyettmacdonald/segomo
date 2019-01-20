@@ -31,6 +31,7 @@ include "header.php";
 <body>
 <div >
     <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. <br> Welcome to Segomo.</h1>
+    <h3 style="color: orangered;">Player stats updated as of January 19, 2019</h3>
     <h2>About Us</h2>
     <p id="about-us">
         Segomo is an application that allows its users to showcase their passion for their favorite sports teams and players.

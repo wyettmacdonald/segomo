@@ -77,7 +77,7 @@ function addData() {
         $num_shares_sold = $share_price_sold['shares_sold'];
 
         if((($num_shares_bought_before - $num_shares_sold) < 20) && (($num_shares_bought - $num_shares_sold) >= 20) or (($num_shares_bought_before - $num_shares_sold) < 40) && (($num_shares_bought - $num_shares_sold) >= 40)) {
-            $new_price = $price*1.05;
+            $new_price = $price*1.02;
             $num_shares_q = $link->query("UPDATE players SET price='$new_price' WHERE name='$name'");
 
         }

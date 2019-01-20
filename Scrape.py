@@ -1,11 +1,12 @@
 import MySQLdb
 import urllib2
 import csv
+import psycopg2
 from bs4 import BeautifulSoup
 from datetime import datetime
 from fractions import Fraction
 
-db = MySQLdb.connect(host="segomo.cizo6tr1olvl.us-east-1.rds.amazonaws.com",user="root",passwd="Kingtut1",db="segomo")
+db = psycopg2.connect(host="ec2-54-225-121-235.compute-1.amazonaws.com",database="d9gpjimto8jmv4",user="fwavvcwcapfmli",password="e21f9c2784210db0d6cae2591330acafa9e0840de683d6d0c774f4a9cc078c12")
 cursor = db.cursor()
 id_num = 1000
 # play_name = "John Rourke"
@@ -184,10 +185,11 @@ names8 = []
 names9 = []
 names10 = []
 
+# Colby
 counter = 1
 count1 = 32
 count2 = 60
-for x in range(24):
+for x in range(25):
 	gp = checkNull((allData[count1+14]))
 	g = checkNull((allData[count1+15]))
 	a = checkNull((allData[count1+16]))
@@ -196,10 +198,9 @@ for x in range(24):
 	else:
 		denom = str(allData[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData[2][25]))
-	print w
-	l = checkNull((allData[2][27]))
-	t = checkNull((allData[2][29]))
+	w = checkNull((allData[2][26]))
+	l = checkNull((allData[2][28]))
+	t = checkNull((allData[2][30]))
 	names.append(allData[count1+1])
 	# if(allData[count1+2] == G):
 # 		prices.append(GKalgo())
@@ -209,9 +210,10 @@ for x in range(24):
 	count1 += 28
 	count2 += 28
 
+#Amherst
 count1 = 32
 count2 = 60
-for x in range(24):
+for x in range(27):
 	gp = checkNull((allData2[count1+14]))
 	g = checkNull((allData2[count1+15]))
 	a = checkNull((allData2[count1+16]))
@@ -220,15 +222,16 @@ for x in range(24):
 	else:
 		denom = str(allData2[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData2[2][25]))
-	l = checkNull((allData2[2][27]))
-	t = checkNull((allData2[2][29]))
+	w = checkNull((allData2[2][26]))
+	l = checkNull((allData2[2][28]))
+	t = checkNull((allData2[2][30]))
 	names2.append(allData2[count1+1])
 	prices2.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
 	count1 += 28
 	count2 += 28
 
+#Bowdoin
 count1 = 32
 count2 = 60
 for x in range(29):
@@ -240,15 +243,16 @@ for x in range(29):
 	else:
 		denom = str(allData3[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData3[2][25]))
-	l = checkNull((allData3[2][27]))
-	t = checkNull((allData3[2][29]))
+	w = checkNull((allData3[2][26]))
+	l = checkNull((allData3[2][28]))
+	t = checkNull((allData3[2][30]))
 	names3.append(allData3[count1+1])
 	prices3.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
 	count1 += 28
 	count2 += 28
 
+#Conn
 count1 = 32
 count2 = 60
 for x in range(27):
@@ -260,18 +264,19 @@ for x in range(27):
 	else:
 		denom = str(allData4[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData4[2][25]))
-	l = checkNull((allData4[2][27]))
-	t = checkNull((allData4[2][29]))
+	w = checkNull((allData4[2][26]))
+	l = checkNull((allData4[2][28]))
+	t = checkNull((allData4[2][30]))
 	names4.append(allData4[count1+1])
 	prices4.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
 	count1 += 28
 	count2 += 28
 
+#Midd
 count1 = 32
 count2 = 60
-for x in range(25):
+for x in range(26):
 	gp = checkNull((allData5[count1+14]))
 	g = checkNull((allData5[count1+15]))
 	a = checkNull((allData5[count1+16]))
@@ -280,15 +285,16 @@ for x in range(25):
 	else:
 		denom = str(allData5[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData5[2][25]))
-	l = checkNull((allData5[2][27]))
-	t = checkNull((allData5[2][29]))
+	w = checkNull((allData5[2][26]))
+	l = checkNull((allData5[2][28]))
+	t = checkNull((allData5[2][30]))
 	names5.append(allData5[count1+1])
 	prices5.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
 	count1 += 28
 	count2 += 28
 
+#Tufts
 count1 = 32
 count2 = 60
 for x in range(30):
@@ -300,18 +306,19 @@ for x in range(30):
 	else:
 		denom = str(allData6[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData6[2][25]))
-	l = checkNull((allData6[2][27]))
-	t = checkNull((allData6[2][29]))
+	w = checkNull((allData6[2][26]))
+	l = checkNull((allData6[2][28]))
+	t = checkNull((allData6[2][30]))
 	names6.append(allData6[count1+1])
 	prices6.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
 	count1 += 28
 	count2 += 28
 
+#Trinity
 count1 = 32
 count2 = 60
-for x in range(26):
+for x in range(27):
 	gp = checkNull((allData7[count1+14]))
 	g = checkNull((allData7[count1+15]))
 	a = checkNull((allData7[count1+16]))
@@ -320,18 +327,19 @@ for x in range(26):
 	else:
 		denom = str(allData7[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData7[2][25]))
-	l = checkNull((allData7[2][27]))
-	t = checkNull((allData7[2][29]))
+	w = checkNull((allData7[2][26]))
+	l = checkNull((allData7[2][28]))
+	t = checkNull((allData7[2][30]))
 	names7.append(allData7[count1+1])
 	prices7.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
 	count1 += 28
 	count2 += 28
 
+#Williams
 count1 = 32
 count2 = 60
-for x in range(24):
+for x in range(26):
 	gp = checkNull((allData8[count1+14]))
 	g = checkNull((allData8[count1+15]))
 	a = checkNull((allData8[count1+16]))
@@ -340,15 +348,16 @@ for x in range(24):
 	else:
 		denom = str(allData8[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData8[2][25]))
-	l = checkNull((allData8[2][27]))
-	t = checkNull((allData8[2][29]))
+	w = checkNull((allData8[2][26]))
+	l = checkNull((allData8[2][28]))
+	t = checkNull((allData8[2][30]))
 	names8.append(allData8[count1+1])
 	prices8.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
 	count1 += 28
 	count2 += 28
 
+#Wesleyan
 count1 = 32
 count2 = 60
 for x in range(25):
@@ -360,15 +369,16 @@ for x in range(25):
 	else:
 		denom = str(allData9[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData9[2][25]))
-	l = checkNull((allData9[2][27]))
-	t = checkNull((allData9[2][29]))
+	w = checkNull((allData9[2][26]))
+	l = checkNull((allData9[2][28]))
+	t = checkNull((allData9[2][30]))
 	names9.append(allData9[count1+1])
 	prices9.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
 	count1 += 28
 	count2 += 28
 
+#Hamilton
 count1 = 32
 count2 = 60
 for x in range(26):
@@ -380,9 +390,9 @@ for x in range(26):
 	else:
 		denom = str(allData10[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData10[2][25]))
-	l = checkNull((allData10[2][27]))
-	t = checkNull((allData10[2][29]))
+	w = checkNull((allData10[2][26]))
+	l = checkNull((allData10[2][28]))
+	t = checkNull((allData10[2][30]))
 	names10.append(allData10[count1+1])
 	prices10.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
@@ -393,26 +403,49 @@ for x in range(26):
 theData = []
 theData2 = []
 
-for x in range(24):
+for x in range(25):
 	theData.append(counter)
 	name = names[x].replace("'","")
 	theData.append(name)
-	theData.append(prices[x])
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices[x]*1.05)
+	else:
+		theData.append(prices[x])
 	theData.append('Colby')
-	theData.append(getSharesBought(name))
-	theData.append(getSharesSold(name))
+	print name, getSharesBought(name)
+	if(getSharesBought(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesBought(name))
+	if(getSharesSold(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesSold(name))
 # 	theData.append('0')
 # 	theData.append('0')
 	counter += 1
 
-for x in range(24):
+for x in range(27):
 	theData.append(counter)
 	name = names2[x].replace("'","")
 	theData.append(name)
-	theData.append(prices2[x])
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices2[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices2[x]*1.05)
+	else:
+		theData.append(prices2[x])
 	theData.append('Amherst')
-	theData.append(getSharesBought(name))
-	theData.append(getSharesSold(name))
+	if(getSharesBought(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesBought(name))
+	if(getSharesSold(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesSold(name))
 	# theData.append('0')
 # 	theData.append('0')
 
@@ -422,7 +455,12 @@ for x in range(29):
 	theData.append(counter)
 	name = names3[x].replace("'","")
 	theData.append(name)
-	theData.append(prices3[x])
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices3[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices3[x]*1.05)
+	else:
+		theData.append(prices3[x])
 	theData.append('Bowdoin')
 	theData.append(getSharesBought(name))
 	theData.append(getSharesSold(name))
@@ -434,32 +472,13 @@ for x in range(27):
 	theData.append(counter)
 	name = names4[x].replace("'","")
 	theData.append(name)
-	theData.append(prices4[x])
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices4[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices4[x]*1.05)
+	else:
+		theData.append(prices4[x])
 	theData.append('Conn')
-	theData.append(getSharesBought(name))
-	theData.append(getSharesSold(name))
-	# theData.append('0')
-# 	theData.append('0')
-	counter += 1
-
-for x in range(25):
-	theData.append(counter)
-	name = names5[x].replace("'","")
-	theData.append(name)
-	theData.append(prices5[x])
-	theData.append('Midd')
-	theData.append(getSharesBought(name))
-	theData.append(getSharesSold(name))
-	# theData.append('0')
-# 	theData.append('0')
-	counter += 1
-
-for x in range(30):
-	theData.append(counter)
-	name = names6[x].replace("'","")
-	theData.append(name)
-	theData.append(prices6[x])
-	theData.append('Tufts')
 	theData.append(getSharesBought(name))
 	theData.append(getSharesSold(name))
 	# theData.append('0')
@@ -468,24 +487,86 @@ for x in range(30):
 
 for x in range(26):
 	theData.append(counter)
-	name = names7[x].replace("'","")
+	name = names5[x].replace("'","")
 	theData.append(name)
-	theData.append(prices7[x])
-	theData.append('Trinity')
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices5[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices5[x]*1.05)
+	else:
+		theData.append(prices5[x])
+	theData.append('Midd')
+	if(getSharesBought(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesBought(name))
+	if(getSharesSold(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesSold(name))
+	# theData.append('0')
+# 	theData.append('0')
+	counter += 1
+
+for x in range(30):
+	theData.append(counter)
+	name = names6[x].replace("'","")
+	theData.append(name)
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices6[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices6[x]*1.05)
+	else:
+		theData.append(prices6[x])
+	theData.append('Tufts')
 	theData.append(getSharesBought(name))
 	theData.append(getSharesSold(name))
 	# theData.append('0')
 # 	theData.append('0')
 	counter += 1
 
-for x in range(24):
+for x in range(27):
+	theData.append(counter)
+	name = names7[x].replace("'","")
+	theData.append(name)
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices7[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices7[x]*1.05)
+	else:
+		theData.append(prices7[x])
+	theData.append('Trinity')
+	if(getSharesBought(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesBought(name))
+	if(getSharesSold(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesSold(name))
+	# theData.append('0')
+# 	theData.append('0')
+	counter += 1
+
+for x in range(26):
 	theData.append(counter)
 	name = names8[x].replace("'","")
 	theData.append(name)
-	theData.append(prices8[x])
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices8[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices8[x]*1.05)
+	else:
+		theData.append(prices8[x])
 	theData.append('Williams')
-	theData.append(getSharesBought(name))
-	theData.append(getSharesSold(name))
+	if(getSharesBought(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesBought(name))
+	if(getSharesSold(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesSold(name))
 	# theData.append('0')
 # 	theData.append('0')
 	counter += 1
@@ -494,7 +575,12 @@ for x in range(25):
 	theData.append(counter)
 	name = names9[x].replace("'","")
 	theData.append(name)
-	theData.append(prices9[x])
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices9[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices9[x]*1.05)
+	else:
+		theData.append(prices9[x])
 	theData.append('Wesleyan')
 	theData.append(getSharesBought(name))
 	theData.append(getSharesSold(name))
@@ -506,7 +592,12 @@ for x in range(26):
 	theData.append(counter)
 	name = names10[x].replace("'","")
 	theData.append(name)
-	theData.append(prices10[x])
+	if((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 40)):
+		theData.append(prices10[x]*1.1)
+	elif((getSharesBought(name) != None) and (getSharesSold(name) != None) and ((getSharesBought(name) - getSharesSold(name)) >= 20)):
+		theData.append(prices10[x]*1.05)
+	else:
+		theData.append(prices10[x])
 	theData.append('Hamilton')
 	theData.append(getSharesBought(name))
 	theData.append(getSharesSold(name))
@@ -514,16 +605,16 @@ for x in range(26):
 # 	theData.append('0')
 	counter += 1
 
-# with open('stats.csv','w') as csv_file:
-# 	writer = csv.DictWriter(csv_file,newHeaders)
-# 	writer.writeheader()
-# 
-# with open('stats.csv','a') as csv_file:
-# 	writer = csv.writer(csv_file)
-# 	start = 0
-# 	end = 6
-# 	for x in range(260):
-# 		writer.writerow(theData[start:end])
-# 		start += 6
-# 		end += 6
+with open('stats2.csv','w') as csv_file:
+	writer = csv.DictWriter(csv_file,newHeaders)
+	writer.writeheader()
+
+with open('stats2.csv','a') as csv_file:
+	writer = csv.writer(csv_file)
+	start = 0
+	end = 6
+	for x in range(268):
+		writer.writerow(theData[start:end])
+		start += 6
+		end += 6
 
