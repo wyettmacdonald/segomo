@@ -45,27 +45,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Prepare a select statement
         $sql = "SELECT id, username, password, coins FROM users WHERE username = ?";
 
-        if($stmt = mysqli_prepare($link, $sql)){
+        if($stmt = $link->prepare($sql)){
 
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
+//            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            $stmt->bindParam(1, $param_username);
 
             // Set parameters
             $param_username = $username;
             $param_coins = $coins;
 
             // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
+            if($stmt->execute(array($username))){
                 // Store result
-                mysqli_stmt_store_result($stmt);
+//                mysqli_stmt_store_result($stmt);
 
 
                 // Check if username exists, if yes then verify password
-                if(mysqli_stmt_num_rows($stmt) == 1){
+                if($stmt->rowCount() == 1) {
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $coins);
-                    if(mysqli_stmt_fetch($stmt)){
-                        if(password_verify($password, $hashed_password)){
+//                    $stmt = pg($stmt, $id, $username, $password, $coins);
+                    $result = $stmt->fetchAll();
+//                    print_r($result);
+//                    echo strval($result[0][1]);
+//                    if($stmt->execute(array($result[0][0], $result[0][1], $result[0][2], $coins))) {
+                        if(password_verify($password, $result[0][2])) {
                             // Password is correct, so start a new session
                             session_start();
 
@@ -76,21 +80,32 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
                             $_SESSION["coins"] = $coins;
+                            $_SESSION["email"] = $email;
 
-                            // Redirect user to welcome page
-                            header("location: welcome.php");
+                            $email_sql = $link->query("SELECT email FROM users WHERE username = '$username'");
+                            $email_row = $email_sql->fetch(PDO::FETCH_ASSOC);
+                            if($email_row['email'] == '') {
+                                header("location: add_email.php");
+                            }
+
+                            else {
+                                // Redirect user to welcome page
+                                header("location: welcome.php");
 //                            mysqli_stmt_close($stmt);
+                            }
 
-                        } else{
+                        }
+                        else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
                         }
-                    }
-                } else{
+                }
+                else{
                     // Display an error message if username doesn't exist
                     $username_err = "No account found with that username.";
                 }
-            } else{
+            }
+            else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
@@ -100,7 +115,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Close connection
-    mysqli_close($link);
+//    mysqli_close($link);
 }
 ?>
 

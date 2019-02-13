@@ -19,15 +19,16 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 require_once "config.php";
 
 $myname = $_SESSION['username'];
-$buyer = mysqli_query($link, "SELECT id FROM users WHERE username = '$myname'");
-$row = mysqli_fetch_assoc($buyer);
-$buyer_id = $row["id"];
+$buyer = $link->query("SELECT id FROM users WHERE username= '$myname'");
+//$buyer = pg_query($link,"SELECT id FROM users WHERE username = '$myname'");
+$row = $buyer->fetch(PDO::FETCH_ASSOC);
+$buyer_id = $row['id'];
 
-$coin_query = mysqli_query($link, "SELECT coins FROM users WHERE id = '$buyer_id'");
-$row2 = mysqli_fetch_assoc($coin_query);
-$user_coins = $row2["coins"];
+$coin_query = $link->query("SELECT coins FROM users WHERE id = '$buyer_id'");
+$row2 = $coin_query->fetch(PDO::FETCH_ASSOC);
+$user_coins = $row2['coins'];
 
-$num_shares_query = mysqli_query($link, "SELECT shares_sold FROM players WHERE ")
+//$num_shares_query = $link->query("SELECT shares_sold FROM players WHERE ")
 
 
 
