@@ -189,7 +189,7 @@ names10 = []
 counter = 1
 count1 = 32
 count2 = 60
-for x in range(25):
+for x in range(27):
 	gp = checkNull((allData[count1+14]))
 	g = checkNull((allData[count1+15]))
 	a = checkNull((allData[count1+16]))
@@ -234,7 +234,7 @@ for x in range(27):
 #Bowdoin
 count1 = 32
 count2 = 60
-for x in range(29):
+for x in range(30):
 	gp = checkNull((allData3[count1+14]))
 	g = checkNull((allData3[count1+15]))
 	a = checkNull((allData3[count1+16]))
@@ -244,8 +244,8 @@ for x in range(29):
 		denom = str(allData3[count1+18])
 		pen = float(denom[-1])
 	w = checkNull((allData3[2][26]))
-	l = checkNull((allData3[2][28]))
-	t = checkNull((allData3[2][30]))
+	l = checkNull((allData3[2][28:30]))
+	t = checkNull((allData3[2][31]))
 	names3.append(allData3[count1+1])
 	prices3.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
@@ -265,8 +265,8 @@ for x in range(27):
 		denom = str(allData4[count1+18])
 		pen = float(denom[-1])
 	w = checkNull((allData4[2][26]))
-	l = checkNull((allData4[2][28]))
-	t = checkNull((allData4[2][30]))
+	l = checkNull((allData4[2][28:30]))
+	t = checkNull((allData4[2][31]))
 	names4.append(allData4[count1+1])
 	prices4.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
@@ -307,8 +307,8 @@ for x in range(30):
 		denom = str(allData6[count1+18])
 		pen = float(denom[-1])
 	w = checkNull((allData6[2][26]))
-	l = checkNull((allData6[2][28]))
-	t = checkNull((allData6[2][30]))
+	l = checkNull((allData6[2][28:30]))
+	t = checkNull((allData6[2][31]))
 	names6.append(allData6[count1+1])
 	prices6.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
@@ -328,8 +328,8 @@ for x in range(27):
 		denom = str(allData7[count1+18])
 		pen = float(denom[-1])
 	w = checkNull((allData7[2][26]))
-	l = checkNull((allData7[2][28]))
-	t = checkNull((allData7[2][30]))
+	l = checkNull((allData7[2][28:30]))
+	t = checkNull((allData7[2][31]))
 	names7.append(allData7[count1+1])
 	prices7.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
@@ -349,8 +349,8 @@ for x in range(26):
 		denom = str(allData8[count1+18])
 		pen = float(denom[-1])
 	w = checkNull((allData8[2][26]))
-	l = checkNull((allData8[2][28]))
-	t = checkNull((allData8[2][30]))
+	l = checkNull((allData8[2][28:30]))
+	t = checkNull((allData8[2][31]))
 	names8.append(allData8[count1+1])
 	prices8.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
@@ -360,7 +360,7 @@ for x in range(26):
 #Wesleyan
 count1 = 32
 count2 = 60
-for x in range(25):
+for x in range(28):
 	gp = checkNull((allData9[count1+14]))
 	g = checkNull((allData9[count1+15]))
 	a = checkNull((allData9[count1+16]))
@@ -369,9 +369,9 @@ for x in range(25):
 	else:
 		denom = str(allData9[count1+18])
 		pen = float(denom[-1])
-	w = checkNull((allData9[2][26]))
-	l = checkNull((allData9[2][28]))
-	t = checkNull((allData9[2][30]))
+	w = checkNull((allData9[2][26:28]))
+	l = checkNull((allData9[2][29]))
+	t = checkNull((allData9[2][31]))
 	names9.append(allData9[count1+1])
 	prices9.append(algo(gp, g, a, pen, w, l, t))
 #	 print algo(gp, g, a, pen, w, l,t)
@@ -403,7 +403,7 @@ for x in range(26):
 theData = []
 theData2 = []
 
-for x in range(25):
+for x in range(27):
 	theData.append(counter)
 	name = names[x].replace("'","")
 	theData.append(name)
@@ -414,7 +414,7 @@ for x in range(25):
 	else:
 		theData.append(prices[x])
 	theData.append('Colby')
-	print name, getSharesBought(name)
+	print name, prices[x]
 	if(getSharesBought(name) == None):
 		theData.append('0')
 	else:
@@ -451,7 +451,7 @@ for x in range(27):
 
 	counter += 1
 
-for x in range(29):
+for x in range(30):
 	theData.append(counter)
 	name = names3[x].replace("'","")
 	theData.append(name)
@@ -462,8 +462,14 @@ for x in range(29):
 	else:
 		theData.append(prices3[x])
 	theData.append('Bowdoin')
-	theData.append(getSharesBought(name))
-	theData.append(getSharesSold(name))
+	if(getSharesBought(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesBought(name))
+	if(getSharesSold(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesSold(name))
 	# theData.append('0')
 # 	theData.append('0')
 	counter += 1
@@ -571,7 +577,7 @@ for x in range(26):
 # 	theData.append('0')
 	counter += 1
 
-for x in range(25):
+for x in range(28):
 	theData.append(counter)
 	name = names9[x].replace("'","")
 	theData.append(name)
@@ -582,8 +588,14 @@ for x in range(25):
 	else:
 		theData.append(prices9[x])
 	theData.append('Wesleyan')
-	theData.append(getSharesBought(name))
-	theData.append(getSharesSold(name))
+	if(getSharesBought(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesBought(name))
+	if(getSharesSold(name) == None):
+		theData.append('0')
+	else:
+		theData.append(getSharesSold(name))
 	# theData.append('0')
 # 	theData.append('0')
 	counter += 1
@@ -613,7 +625,7 @@ with open('stats2.csv','a') as csv_file:
 	writer = csv.writer(csv_file)
 	start = 0
 	end = 6
-	for x in range(268):
+	for x in range(274):
 		writer.writerow(theData[start:end])
 		start += 6
 		end += 6
